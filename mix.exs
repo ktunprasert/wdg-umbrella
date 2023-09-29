@@ -13,6 +13,7 @@ defmodule WDGUmbrella.MixProject do
   def application do
     [
       mod: {WDG.Application, []},
+      applications: [:serum],
       extra_applications: [:logger]
     ]
   end

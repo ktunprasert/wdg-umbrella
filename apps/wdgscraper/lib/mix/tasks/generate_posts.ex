@@ -5,6 +5,8 @@ defmodule Mix.Tasks.Generate.Posts do
   use Mix.Task
   import Ecto.Query
 
+  @base_url "https://boards.4channel.org/g/thread/"
+
   @impl Mix.Task
   def run(_args) do
     Mix.Task.run("app.start")
@@ -14,16 +16,17 @@ defmodule Mix.Tasks.Generate.Posts do
 
     posts
     |> Task.async_stream(fn post ->
-      status = write_image(post)
+      {status, image_text} = write_image(post)
+
       IO.puts("Wrote image #{post.post_num} with status #{inspect(status)}")
 
-      status = write_post(post)
+      status = write_post(post, image_text)
       IO.puts("Wrote post #{post.post_num} with status #{inspect(status)}")
     end)
     |> Enum.to_list()
   end
 
-  defp write_post(%WDG.Post{} = post) do
+  defp write_post(%WDG.Post{} = post, image_text \\ "") do
     tags = [post.dev | post.tools] |> Enum.join(", ")
 
     content = """
@@ -34,11 +37,12 @@ defmodule Mix.Tasks.Generate.Posts do
     dev: #{post.dev}
     langs: #{Enum.join(post.tools, ", ")}
     post: #{post.post_num}
+    thread: #{post.thread_no}
+    post_link: #{build_link(post.thread_no, post.post_num)}
+    thread_link: #{build_link(post.thread_no)}
     ---
 
-    >>>#{post.post_num}
-
-    ![img](/assets/images/#{post.post_num}#{post.image_ext})
+    #{image_text}
 
     #{post.description}
     """
@@ -51,7 +55,7 @@ defmodule Mix.Tasks.Generate.Posts do
     :ok
   end
 
-  defp write_image(%WDG.Post{image: nil}), do: :no_image
+  defp write_image(%WDG.Post{image: nil}), do: {:no_image, ""}
 
   defp write_image(%WDG.Post{} = post) do
     {:ok, file} =
@@ -59,6 +63,9 @@ defmodule Mix.Tasks.Generate.Posts do
 
     IO.binwrite(file, post.image)
     File.close(file)
-    :ok
+    {:ok, "![img](/assets/images/#{post.post_num}#{post.image_ext})"}
   end
+
+  defp build_link(thread_no, post_no), do: @base_url <> "#{thread_no}#p#{post_no}"
+  defp build_link(thread_no), do: @base_url <> "#{thread_no}"
 end

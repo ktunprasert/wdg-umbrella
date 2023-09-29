@@ -13,7 +13,7 @@ defmodule WDG.Chan do
   def get_thread(post_id, board \\ @board) do
     R.get!(@root <> "#{board}/thread/#{post_id}.json")
     |> Map.get(:body)
-    |> Jason.decode!()
+    |> Jason.decode()
   end
 
   def is_thread_wdg?(%{"posts" => [post | _]}) do

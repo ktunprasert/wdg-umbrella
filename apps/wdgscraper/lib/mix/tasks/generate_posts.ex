@@ -29,7 +29,7 @@ defmodule Mix.Tasks.Generate.Posts do
     content = """
     ---
     title: #{post.title}
-    date: #{post.inserted_at}
+    date: #{post.posted_at}
     tags: #{tags}
     dev: #{post.dev}
     langs: #{Enum.join(post.tools, ", ")}
@@ -43,7 +43,7 @@ defmodule Mix.Tasks.Generate.Posts do
     #{post.description}
     """
 
-    date_prefix = post.inserted_at |> NaiveDateTime.to_date()
+    date_prefix = post.posted_at |> NaiveDateTime.to_date()
 
     {:ok, file} = File.open(File.cwd!() <> "/posts/#{date_prefix}-#{post.post_num}.md", [:write])
     IO.binwrite(file, content)

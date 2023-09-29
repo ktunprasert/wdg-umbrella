@@ -9,7 +9,7 @@ defmodule WDG.Scraper do
         post_id ->
           IO.puts("Scraping post #{post_id}")
 
-          with thread <- Chan.get_thread(post_id),
+          with {:ok, thread} <- Chan.get_thread(post_id),
                true <- thread |> Chan.is_thread_wdg?() do
             IO.puts("Thread matched #{post_id} parsing...")
             [_op | non_op_posts] = thread |> Map.get("posts")

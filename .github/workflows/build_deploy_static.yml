@@ -8,8 +8,6 @@ name: Build and Deploy static
 on:
   push:
     branches: ["master"]
-  pull_request:
-    branches: ["master"]
 
 permissions:
   contents: read

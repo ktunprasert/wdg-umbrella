@@ -49,7 +49,9 @@ defmodule Mix.Tasks.Generate.Posts do
 
     date_prefix = post.posted_at |> NaiveDateTime.to_date()
 
-    {:ok, file} = File.open(File.cwd!() <> "/posts/#{date_prefix}-#{post.post_num}.md", [:write])
+    {:ok, file} =
+      File.open(File.cwd!() <> "/posts/#{date_prefix}-#{post.post_num}.md", [:write])
+
     IO.binwrite(file, content)
     File.close(file)
     :ok
@@ -59,7 +61,9 @@ defmodule Mix.Tasks.Generate.Posts do
 
   defp write_image(%WDG.Post{} = post) do
     {:ok, file} =
-      File.open(File.cwd!() <> "/assets/images/#{post.post_num}#{post.image_ext}", [:write])
+      File.open(File.cwd!() <> "/assets/images/#{post.post_num}#{post.image_ext}", [
+        :write
+      ])
 
     IO.binwrite(file, post.image)
     File.close(file)

@@ -1,6 +1,6 @@
 %{
   site_name: "/wdg/.one",
-  site_description: "TODO: Add site description",
+  site_description: "A collection of projects by /wdg/ devs",
   date_format: "{WDfull}, {D} {Mshort} {YYYY}",
   base_url: "/",
   author: "Kris Tun",

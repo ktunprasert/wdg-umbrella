@@ -1,12 +1,27 @@
 <h2><%= @page.title %></h2>
 
-<p>Projects</p>
-<ul>
+<table>
+<thead>
+  <tr>
+    <th scope="col">Name</th>
+    <th scope="col">Dev</th>
+    <th scope="col">Tools</th>
+    <th scope="col">Date</th>
+    <th scope="col">Thread</th>
+    <th scope="col">Post</th>
+  </tr>
+</thead>
+
+<tbody>
   <%= for x <- @all_posts do %>
-    <li>
-      <a href="<%= x.url %>"><%= x.title %></a>
-      &mdash;
-      <span class="date"><%= x.date %></span>
-    </li>
+  <tr>
+    <td scope="row"><a href="<%= x.url %>"><%= x.title %></a></td>
+    <td><%= x.extras["dev"] %></td>
+    <td><%= x.extras["langs"] %></td>
+    <td><%= x.date %></td>
+    <td><a href="<%= x.extras["thread_link"] %>"> <%= ">>#{x.extras["thread"]}" %> </a></td>
+    <td><a href="<%= x.extras["post_link"] %>"> <%= ">>#{x.extras["post"]}" %> </a></td>
+  </tr>
   <% end %>
-</ul>
+</tbody>
+</table>

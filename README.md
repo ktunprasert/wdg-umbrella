@@ -3,7 +3,7 @@
 [![Elixir CI](https://github.com/ktunprasert/wdg-umbrella/actions/workflows/elixir.yml/badge.svg)](https://github.com/ktunprasert/wdg-umbrella/actions/workflows/elixir.yml)
 
 This repo contains the source code for the scraper to scrape posts matching the specified format in the site.
-The scraper will pick up these post, convert to an entity within the SQLite DB under the `apps/wdgscraper` projec.
+The scraper will pick up these post, convert to an entity within the SQLite DB under the `apps/wdgscraper` project.
 The SQLite files are available and saved on `./db/` folder.
 
 ## Getting started
@@ -18,13 +18,13 @@ mix deps.get
 # perform migration to ensure we're on the latest
 mix ecto.migrate
 # launch the scraper and scrape threads for /wdg/ threads
-mix scrape.acrhive
+mix scrape.archive
 # alternatively you may use thread-based scraping
 # the command below will scrape threads = [123, 456, 789]
 mix scrape.thread 123 456 789
 ```
 
-To genereate the static pages you will have to move into the `apps/serum_static` directory
+To generate the static pages you will have to move into the `apps/serum_static` directory
 
 ```bash
 cd apps/serum_static

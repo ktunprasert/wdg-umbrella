@@ -1,0 +1,3 @@
+:where(dl, ol, ul) li {
+  margin-bottom: 0;
+}

@@ -1,0 +1,12 @@
+<h2><%= @page.title %></h2>
+
+<p>Projects</p>
+<ul>
+  <%= for x <- @all_posts do %>
+    <li>
+      <a href="<%= x.url %>"><%= x.title %></a>
+      &mdash;
+      <span class="date"><%= x.date %></span>
+    </li>
+  <% end %>
+</ul>

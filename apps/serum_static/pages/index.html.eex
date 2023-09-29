@@ -1,0 +1,16 @@
+---
+title: Home
+---
+
+<h2> Submitting a project update </h2>
+
+<p>If you have a project you'd like to include an update for then make a post in the latest thread with the format of:</p>
+
+<blockquote>
+:: my-project-title ::<br>
+dev:: anon<br>
+tools:: node, react, etc<br>
+link:: https://my.website.com<br>
+repo:: https://github.com/user/repo<br>
+progress:: Lorem ipsum dolor sit amet, consetetur sadipscing elitr<br>
+</blockquote>

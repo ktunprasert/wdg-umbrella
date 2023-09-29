@@ -1,0 +1,16 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title><%= @page.title %> - <%= @site.name %></title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
+    <link rel="stylesheet" href="<%= asset "css/pico.css" %>"/>
+    <link rel="stylesheet" href="<%= asset "css/custom.css" %>"/>
+  </head>
+  <body>
+    <main class="container">
+      <%= include "nav" %>
+      <%= @contents %>
+    </main>
+  </body>
+</html>

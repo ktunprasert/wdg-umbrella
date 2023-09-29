@@ -9,13 +9,23 @@ defmodule WDG.Post do
     field(:link, :string)
     field(:description, :string)
     field(:post_num, :integer)
+    field(:image, :binary)
 
     timestamps()
   end
 
   def changeset(post, params \\ %{}) do
     post
-    |> Ecto.Changeset.cast(params, [:title, :dev, :repo, :tools, :link, :description, :post_num])
+    |> Ecto.Changeset.cast(params, [
+      :title,
+      :dev,
+      :repo,
+      :tools,
+      :link,
+      :description,
+      :post_num,
+      :binary
+    ])
     |> Ecto.Changeset.validate_required([:title])
     |> Ecto.Changeset.unique_constraint(:post_num)
   end

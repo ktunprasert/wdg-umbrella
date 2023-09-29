@@ -12,6 +12,7 @@ defmodule WDG.Post do
     field(:thread_no, :integer)
     field(:image, :binary)
     field(:image_ext, :string)
+    field(:posted_at, :naive_datetime)
 
     timestamps()
   end
@@ -28,7 +29,8 @@ defmodule WDG.Post do
       :post_num,
       :thread_no,
       :image,
-      :image_ext
+      :image_ext,
+      :posted_at
     ])
     |> Ecto.Changeset.validate_required([:title])
     |> Ecto.Changeset.unique_constraint(:post_num)

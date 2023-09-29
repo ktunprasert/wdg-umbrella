@@ -31,6 +31,9 @@ defmodule WDG.Scraper do
                   count < 5
               end
             end)
+          else
+            _ ->
+              []
           end
       end,
       max_concurrency: con,
@@ -59,7 +62,8 @@ defmodule WDG.Scraper do
           repo: repo
         },
         "no" => post_num,
-        "resto" => thread_no
+        "resto" => thread_no,
+        "time" => time_unix
       } = post ->
         {filename, ext} = {Map.get(post, "tim"), Map.get(post, "ext")}
 
@@ -89,7 +93,8 @@ defmodule WDG.Scraper do
           image: image,
           image_ext: ext,
           inserted_at: now,
-          updated_at: now
+          updated_at: now,
+          posted_at: time_unix |> DateTime.from_unix!() |> DateTime.to_naive()
         }
     end)
     |> then(&WDG.Repo.insert_all(WDG.Post, &1))

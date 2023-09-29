@@ -33,6 +33,5 @@ defmodule WDG.Scraper do
       max_concurrency: con
     )
     |> Enum.reduce([], fn {:ok, posts}, acc -> acc ++ posts end)
-    |> dbg
   end
 end

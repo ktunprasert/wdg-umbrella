@@ -3,6 +3,8 @@
 Posted on <%= @page.date %> <br>
 Dev: <%= @page.extras["dev"] %> <br>
 Tools: <%= @page.extras["langs"] %> <br>
+Thread: <a href="<%= @page.extras["thread_link"] %>"> <%= ">>#{@page.extras["thread"]}" %> </a> <br>
+Post: <a href="<%= @page.extras["post_link"] %>"> <%= ">>#{@page.extras["post"]}" %> </a> <br>
 </blockquote>
 
 <p>

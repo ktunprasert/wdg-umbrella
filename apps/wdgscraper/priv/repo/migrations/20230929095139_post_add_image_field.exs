@@ -4,6 +4,7 @@ defmodule WDG.Repo.Migrations.PostAddImageField do
   def change do
     alter table(:posts) do
       add :image, :binary
+      add :image_ext, :string
     end
   end
 end

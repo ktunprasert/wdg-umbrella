@@ -10,6 +10,7 @@ defmodule WDG.Post do
     field(:description, :string)
     field(:post_num, :integer)
     field(:image, :binary)
+    field(:image_ext, :string)
 
     timestamps()
   end
@@ -24,7 +25,8 @@ defmodule WDG.Post do
       :link,
       :description,
       :post_num,
-      :binary
+      :image,
+      :image_ext
     ])
     |> Ecto.Changeset.validate_required([:title])
     |> Ecto.Changeset.unique_constraint(:post_num)

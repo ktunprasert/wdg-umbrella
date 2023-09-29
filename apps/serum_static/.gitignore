@@ -24,3 +24,6 @@ serum_static-*.tar
 
 # The default directory which Serum builds the website into.
 /site/
+
+# Asset files
+assets/images/*

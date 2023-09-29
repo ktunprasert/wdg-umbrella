@@ -27,8 +27,8 @@ defmodule WDG.Scraper do
                     |> Map.to_list()
                     |> Enum.count(fn {_, v} -> v == nil end)
 
-                  # if the nil count is less than or equal to 5, then it's a valid post
-                  count <= 5
+                  # if the nil count is less than to 5, then it's a valid post
+                  count < 5
               end
             end)
           end
@@ -70,11 +70,17 @@ defmodule WDG.Scraper do
             nil
           end
 
+        tools =
+          case tools do
+            nil -> nil
+            string -> string |> String.split(",") |> Enum.map(&String.trim/1)
+          end
+
         %{
           title: title,
           dev: dev,
           repo: repo,
-          tools: tools |> String.split(",") |> Enum.map(&String.trim/1),
+          tools: tools,
           link: link,
           description: progress,
           post_num: post_num,

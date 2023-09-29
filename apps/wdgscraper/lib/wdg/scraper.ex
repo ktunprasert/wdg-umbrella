@@ -34,4 +34,49 @@ defmodule WDG.Scraper do
     )
     |> Enum.reduce([], fn {:ok, posts}, acc -> acc ++ posts end)
   end
+
+  def insert_posts(posts) do
+    now =
+      NaiveDateTime.utc_now()
+      |> NaiveDateTime.truncate(:second)
+
+    posts
+    |> Enum.map(fn
+      %{
+        "body" => %{
+          link: link,
+          progress: progress,
+          title: title,
+          dev: dev,
+          tools: tools,
+          repo: repo
+        },
+        "no" => post_num,
+        "ext" => ext,
+        "tim" => filename
+      } = post ->
+        image =
+          if Map.get(post, "filename") != nil do
+            {:ok, %{body: image}} = HTTPoison.get("https://i.4cdn.org/g/#{filename}#{ext}")
+            image
+          else
+            nil
+          end
+
+        %{
+          title: title,
+          dev: dev,
+          repo: repo,
+          tools: tools |> String.split(",") |> Enum.map(&String.trim/1),
+          link: link,
+          description: progress,
+          post_num: post_num,
+          image: image,
+          image_ext: ext,
+          inserted_at: now,
+          updated_at: now
+        }
+    end)
+    |> then(&WDG.Repo.insert_all(WDG.Post, &1))
+  end
 end

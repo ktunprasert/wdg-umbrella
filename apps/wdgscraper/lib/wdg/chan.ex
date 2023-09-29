@@ -20,7 +20,9 @@ defmodule WDG.Chan do
     is_wdg?(post["sub"])
   end
 
-  def is_wdg?(subject) do
+  def is_wdg?(subject) when is_binary(subject) do
     String.match?(subject, ~r/\/wdg\//)
   end
+
+  def is_wdg?(_), do: false
 end

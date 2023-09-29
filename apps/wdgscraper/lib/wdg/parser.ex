@@ -6,9 +6,11 @@ defmodule WDG.Parser do
   @repo ~r/repo::\s?([^<]+)<?/
   @progress ~r/progress::\s?([^<]+)(?:<\/pre>)?/
 
-  def is_scrape_target?(string) do
+  def is_scrape_target?(string) when is_binary(string) do
     String.match?(string, @title)
   end
+
+  def is_scrape_target?(_), do: false
 
   def extract_title(string) do
     Regex.run(@title, string) |> handle_regex_run()

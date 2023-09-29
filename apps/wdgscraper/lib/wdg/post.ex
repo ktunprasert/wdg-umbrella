@@ -9,6 +9,7 @@ defmodule WDG.Post do
     field(:link, :string)
     field(:description, :string)
     field(:post_num, :integer)
+    field(:thread_no, :integer)
     field(:image, :binary)
     field(:image_ext, :string)
 
@@ -25,6 +26,7 @@ defmodule WDG.Post do
       :link,
       :description,
       :post_num,
+      :thread_no,
       :image,
       :image_ext
     ])

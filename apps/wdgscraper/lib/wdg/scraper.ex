@@ -58,7 +58,8 @@ defmodule WDG.Scraper do
           tools: tools,
           repo: repo
         },
-        "no" => post_num
+        "no" => post_num,
+        "resto" => thread_no
       } = post ->
         {filename, ext} = {Map.get(post, "tim"), Map.get(post, "ext")}
 
@@ -84,6 +85,7 @@ defmodule WDG.Scraper do
           link: link,
           description: progress,
           post_num: post_num,
+          thread_no: thread_no,
           image: image,
           image_ext: ext,
           inserted_at: now,

@@ -10,6 +10,13 @@ defmodule WDGUmbrella.MixProject do
     ]
   end
 
+  def application do
+    [
+      mod: {WDG.Application, []},
+      extra_applications: [:logger]
+    ]
+  end
+
   # Dependencies listed here are available only for this
   # project and cannot be accessed from applications inside
   # the apps folder.

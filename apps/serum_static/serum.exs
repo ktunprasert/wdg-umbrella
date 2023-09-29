@@ -5,6 +5,8 @@
   base_url: "/",
   author: "Kris Tun",
   author_email: "kris@kristun.dev",
+  list_title_all: "All Projects",
+  list_title_tag: "Projects tagged \"~s\"",
   plugins: [
     {Serum.Plugins.LiveReloader, only: :dev}
   ]

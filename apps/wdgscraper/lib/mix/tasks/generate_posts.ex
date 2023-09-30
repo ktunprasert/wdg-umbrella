@@ -40,6 +40,8 @@ defmodule Mix.Tasks.Generate.Posts do
     thread: #{post.thread_no}
     post_link: #{build_link(post.thread_no, post.post_num)}
     thread_link: #{build_link(post.thread_no)}
+    link: #{post.link}
+    repo: #{post.repo}
     ---
 
     #{image_text}

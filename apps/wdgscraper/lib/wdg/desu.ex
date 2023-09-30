@@ -15,25 +15,29 @@ defmodule WDG.Desu do
   end
 
   def scrape_for_parseable(posts) do
-    Task.async_stream(posts, fn post ->
-      IO.puts("Scraping post #{post["num"]}")
+    Task.async_stream(
+      posts,
+      fn post ->
+        IO.puts("Scraping post #{post["num"]}")
 
-      with true <- post["comment_sanitized"] |> Parser.is_scrape_target?() do
-        IO.puts("Post matched #{post["num"]} parsing...")
+        with true <- post["comment_sanitized"] |> Parser.is_scrape_target?() do
+          IO.puts("Post matched #{post["num"]} parsing...")
 
-        body = Parser.extract_post(post["comment_sanitized"])
+          body = Parser.extract_post(post["comment_sanitized"])
 
-        if body |> Map.to_list() |> Enum.count(fn {_, v} -> v == nil end) < 5 do
-          post
-          |> Map.put("body", body)
+          if body |> Map.to_list() |> Enum.count(fn {_, v} -> v == nil end) < 5 do
+            post
+            |> Map.put("body", body)
+          else
+            post
+            |> Map.put("body", nil)
+          end
         else
-          post
-          |> Map.put("body", nil)
+          _ -> false
         end
-      else
-        _ -> false
-      end
-    end)
+      end,
+      timeout: :infinity
+    )
     |> Enum.reduce(
       [],
       fn

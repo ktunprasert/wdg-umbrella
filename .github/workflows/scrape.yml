@@ -4,8 +4,6 @@ on:
   schedule:
     # Run at 0:00 and 12:00 every day
     - cron: "0 */12 * * *"
-  pull_request:
-    branches: ["master"]
 
 permissions:
   contents: write

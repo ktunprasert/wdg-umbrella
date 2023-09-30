@@ -6,7 +6,9 @@ defmodule WDG.Desu do
   alias WDG.Parser
 
   def search(text, board \\ @board) do
-    R.get!(@root <> "search/?board=#{board}&text=#{text}")
+    query = URI.encode_query(text: text, board: board)
+
+    R.get!(@root <> "search/?#{query}")
     |> Map.get(:body)
     |> Jason.decode!()
     |> get_in(["0", "posts"])

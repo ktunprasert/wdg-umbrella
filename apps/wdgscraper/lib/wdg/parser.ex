@@ -1,9 +1,9 @@
 defmodule WDG.Parser do
   @title ~r/::\s?(.+)\s?::/U
-  @dev ~r/dev::\s?([^<]+)<?/
-  @tools ~r/tools::\s?([^<]+)<?/
-  @link ~r/link::\s?([^<]+)<?/
-  @repo ~r/repo::\s?([^<]+)<?/
+  @dev ~r/dev::\s?([^<\n]+)<?/
+  @tools ~r/tools::\s?([^<\n]+)<?/
+  @link ~r/link::\s?([^<\n]+)<?/
+  @repo ~r/repo::\s?([^<\n]+)<?/
   @progress ~r/progress::\s?([^<]+)(?:<\/pre>)?/
 
   def is_scrape_target?(string) when is_binary(string) do

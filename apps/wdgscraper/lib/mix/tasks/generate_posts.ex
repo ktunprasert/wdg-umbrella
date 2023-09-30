@@ -27,7 +27,13 @@ defmodule Mix.Tasks.Generate.Posts do
   end
 
   defp write_post(%WDG.Post{} = post, image_text \\ "") do
-    tags = [post.dev | post.tools] |> Enum.join(", ")
+    {tags, langs} =
+      case {post.dev, post.tools} do
+        {nil, nil} -> {nil, nil}
+        {dev, nil} -> {dev, nil}
+        {nil, tools} -> {Enum.join(tools, ", "), Enum.join(tools, ", ")}
+        {dev, tools} -> {Enum.join([dev | tools], ", "), Enum.join(tools, ", ")}
+      end
 
     content = """
     ---
@@ -35,7 +41,7 @@ defmodule Mix.Tasks.Generate.Posts do
     date: #{post.posted_at}
     tags: #{tags}
     dev: #{post.dev}
-    langs: #{Enum.join(post.tools, ", ")}
+    langs: #{langs}
     post: #{post.post_num}
     thread: #{post.thread_no}
     post_link: #{build_link(post.thread_no, post.post_num)}

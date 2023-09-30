@@ -160,5 +160,21 @@ defmodule WDGParserTest do
       assert WDG.Parser.extract_post("") == nil
       assert WDG.Parser.extract_post("progress::<br>") == nil
     end
+
+    test "desuarchive case" do
+      post = ">>79961364\n:: dark-heya ::\ndev:: altilunium\ntools:: go, gin, melody\nlink:: http://dark-heya.ddns.net/\nrepo:: https://github.com/altilunium/darkhall\nprogress:: Yet another chat app. But the server is only routing the messages to current online users, not storing it. You can host it on your instance for your own private chat server."
+
+      expected = %{
+        title: "dark-heya",
+        tools: "go, gin, melody",
+        dev: "altilunium",
+        link: "http://dark-heya.ddns.net/",
+        progress:
+          "Yet another chat app. But the server is only routing the messages to current online users, not storing it. You can host it on your instance for your own private chat server.",
+        repo: "https://github.com/altilunium/darkhall"
+      }
+
+      assert WDG.Parser.extract_post(post) == expected
+    end
   end
 end

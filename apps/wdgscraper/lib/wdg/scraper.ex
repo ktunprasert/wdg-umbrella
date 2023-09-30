@@ -81,7 +81,7 @@ defmodule WDG.Scraper do
             string -> string |> String.split(",") |> Enum.map(&String.trim/1)
           end
 
-        %{
+        params = %{
           title: title,
           dev: dev,
           repo: repo,
@@ -96,7 +96,14 @@ defmodule WDG.Scraper do
           updated_at: now,
           posted_at: time_unix |> DateTime.from_unix!() |> DateTime.to_naive()
         }
+
+        WDG.Post.changeset(%WDG.Post{}, params)
+        |> WDG.Repo.insert()
     end)
-    |> then(&WDG.Repo.insert_all(WDG.Post, &1))
+    |> Enum.reduce({0, 0}, fn
+      {:ok, _}, {success, ignored} -> {success + 1, ignored}
+      {:error, _}, {success, ignored} -> {success, ignored + 1}
+      _, acc -> acc
+    end)
   end
 end

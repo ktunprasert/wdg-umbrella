@@ -12,8 +12,9 @@ defmodule Mix.Tasks.Scrape.Thread do
       command_line_args
       |> Enum.map(&String.to_integer/1)
 
-    {num, _} = WDG.Scraper.insert_posts(WDG.Scraper.scrape_for_wdg(ids))
+    {success, ignored} = WDG.Scraper.insert_posts(WDG.Scraper.scrape_for_wdg(ids))
 
-    Mix.Shell.IO.info("Inserted #{num} posts")
+    Mix.Shell.IO.info("Inserted #{success} posts")
+    Mix.Shell.IO.info("Ignored #{ignored} posts")
   end
 end

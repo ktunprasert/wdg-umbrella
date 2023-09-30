@@ -5,6 +5,8 @@ Dev: <%= @page.extras["dev"] %> <br>
 Tools: <%= @page.extras["langs"] %> <br>
 Thread: <a target="_blank" href="<%= @page.extras["thread_link"] %>"> <%= ">>#{@page.extras["thread"]}" %> </a> <br>
 Post: <a target="_blank" href="<%= @page.extras["post_link"] %>"> <%= ">>#{@page.extras["post"]}" %> </a> <br>
+Link: <a target="_blank" href="<%= @page.extras["link"] %>"> <%= @page.extras["link"] %> </a> <br>
+Repo: <a target="_blank" href="<%= @page.extras["repo"] %>"> <%= @page.extras["repo"] %> </a> <br>
 </blockquote>
 
 <p>

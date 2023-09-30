@@ -101,8 +101,12 @@ defmodule WDG.Desu do
           posted_at: time_unix |> DateTime.from_unix!() |> DateTime.to_naive()
         }
 
-        WDG.Post.changeset(%WDG.Post{}, params)
-        |> WDG.Repo.insert()
+        if title == "my-project-title" do
+          {:error, :ignored}
+        else
+          WDG.Post.changeset(%WDG.Post{}, params)
+          |> WDG.Repo.insert()
+        end
     end)
     |> Enum.reduce({0, 0}, fn
       {:ok, _}, {success, ignored} -> {success + 1, ignored}

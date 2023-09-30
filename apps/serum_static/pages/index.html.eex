@@ -14,3 +14,5 @@ link:: https://my.website.com<br>
 repo:: https://github.com/user/repo<br>
 progress:: Lorem ipsum dolor sit amet, consetetur sadipscing elitr<br>
 </blockquote>
+
+<p>Shoutout to <a target="_blank" href="https://github.com/persunde/wdg-projects">https://github.com/persunde/wdg-projects</a> for the first crawler and idea behind it.</p>

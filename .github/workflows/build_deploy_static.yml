@@ -8,6 +8,9 @@ name: Build and Deploy static
 on:
   push:
     branches: ["master"]
+    paths:
+      - "db/*.db"
+      - "apps/serum_static/**"
 
 permissions:
   contents: read

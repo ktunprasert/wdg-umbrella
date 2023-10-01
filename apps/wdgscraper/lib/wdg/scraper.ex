@@ -2,7 +2,9 @@ defmodule WDG.Scraper do
   alias WDG.Chan
   alias WDG.Parser
 
-  def scrape_for_wdg(post_ids, con \\ 50) do
+  def scrape_for_wdg(post_ids, opts \\ []) do
+    max_id = opts[:max_id] || 1
+
     Task.async_stream(
       post_ids,
       fn
@@ -15,28 +17,15 @@ defmodule WDG.Scraper do
             [_op | non_op_posts] = thread |> Map.get("posts")
 
             non_op_posts
+            |> Enum.filter(fn post -> post["no"] >= max_id end)
             |> Enum.map(fn post -> Map.put(post, "body", Parser.extract_post(post["com"])) end)
-            |> Enum.filter(fn post ->
-              case post["body"] do
-                nil ->
-                  false
-
-                body ->
-                  count =
-                    body
-                    |> Map.to_list()
-                    |> Enum.count(fn {_, v} -> v == nil end)
-
-                  # if the nil count is less than to 5, then it's a valid post
-                  count < 5
-              end
-            end)
+            |> Enum.filter(&is_post_valid?/1)
           else
             _ ->
               []
           end
       end,
-      max_concurrency: con,
+      max_concurrency: opts[:con] || 50,
       timeout: :infinity
     )
     |> Enum.reduce([], fn
@@ -105,5 +94,17 @@ defmodule WDG.Scraper do
       {:error, _}, {success, ignored} -> {success, ignored + 1}
       _, acc -> acc
     end)
+  end
+
+  defp is_post_valid?(%{"body" => nil}), do: nil
+
+  defp is_post_valid?(%{"body" => body}) do
+    count =
+      body
+      |> Map.to_list()
+      |> Enum.count(fn {_, v} -> v == nil end)
+
+    # if the nil count is less than to 5, then it's a valid post
+    count < 5
   end
 end

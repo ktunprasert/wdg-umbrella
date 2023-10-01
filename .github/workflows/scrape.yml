@@ -2,8 +2,8 @@ name: Scrape and Commit Workflow
 
 on:
   schedule:
-    # Run at 0:00 and 12:00 every day
-    - cron: "0 */12 * * *"
+    # Run at every 4 hours of the day
+    - cron: "0 */4 * * *"
 
 permissions:
   contents: write
@@ -27,8 +27,8 @@ jobs:
           restore-keys: ${{ runner.os }}-mix-
       - name: Install dependencies
         run: mix deps.get
-      - name: Scrape Archive
-        run: mix scrape.archive
+      - name: Scrape Catalog
+        run: mix scrape.catalog
       - name: Commit changes to db/*
         run: |
           git config --global user.name "GitHub Actions"

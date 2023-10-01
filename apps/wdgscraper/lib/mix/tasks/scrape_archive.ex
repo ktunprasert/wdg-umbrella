@@ -12,11 +12,10 @@ defmodule Mix.Tasks.Scrape.Archive do
     max_id =
       WDG.Repo.one(from(p in WDG.Post, select: max(p.post_num))) || 1
 
-    ids =
+    {success, ignored} =
       WDG.Chan.get_archive()
-      |> Enum.filter(fn id -> id >= max_id end)
-
-    {success, ignored} = WDG.Scraper.insert_posts(WDG.Scraper.scrape_for_wdg(ids))
+      |> WDG.Scraper.scrape_for_wdg(max_id: max_id)
+      |> WDG.Scraper.insert_posts()
 
     Mix.Shell.IO.info("Inserted #{success} posts")
     Mix.Shell.IO.info("Ignored #{ignored} posts")

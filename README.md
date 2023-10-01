@@ -1,6 +1,8 @@
 # WDG Umbrella Project
 
-[![Elixir CI](https://github.com/ktunprasert/wdg-umbrella/actions/workflows/elixir.yml/badge.svg)](https://github.com/ktunprasert/wdg-umbrella/actions/workflows/elixir.yml)
+[![Unit Tests](https://github.com/ktunprasert/wdg-umbrella/actions/workflows/elixir.yml/badge.svg)](https://github.com/ktunprasert/wdg-umbrella/actions/workflows/elixir.yml)
+[![Scrape and Commit](https://github.com/ktunprasert/wdg-umbrella/actions/workflows/scrape.yml/badge.svg)](https://github.com/ktunprasert/wdg-umbrella/actions/workflows/scrape.yml)
+[![Deploy to Github.io](https://github.com/ktunprasert/wdg-umbrella/actions/workflows/build_deploy_static.yml/badge.svg)](https://github.com/ktunprasert/wdg-umbrella/actions/workflows/build_deploy_static.yml)
 
 This repo contains the source code for the scraper to scrape posts matching the specified format in the site.
 The scraper will pick up these post, convert to an entity within the SQLite DB under the `apps/wdgscraper` project.

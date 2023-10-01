@@ -11,6 +11,7 @@ on:
     paths:
       - "db/**"
       - "apps/serum_static/**"
+  workflow_dispatch:
 
 permissions:
   contents: read

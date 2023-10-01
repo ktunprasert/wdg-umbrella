@@ -10,6 +10,12 @@ defmodule WDG.Chan do
     |> Jason.decode!()
   end
 
+  def get_catalog(board \\ @board) do
+    R.get!(@root <> board <> "/catalog.json")
+    |> Map.get(:body)
+    |> Jason.decode!()
+  end
+
   def get_thread(post_id, board \\ @board) do
     R.get!(@root <> "#{board}/thread/#{post_id}.json")
     |> Map.get(:body)

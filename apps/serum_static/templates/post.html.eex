@@ -1,24 +1,18 @@
 <h1><%= @page.title %></h1>
 <blockquote>
-Posted on <%= @page.date %> <br>
-Dev: <%= @page.extras["dev"] %> <br>
-Tools: <%= @page.extras["langs"] %> <br>
-Thread: <a target="_blank" href="<%= @page.extras["thread_link"] %>"> <%= ">>#{@page.extras["thread"]}" %> </a> <br>
-Post: <a target="_blank" href="<%= @page.extras["post_link"] %>"> <%= ">>#{@page.extras["post"]}" %> </a> <br>
+Last update: <%= @page.date %> <br>
+Dev: <a href="/tags/<%= @page.extras["dev"] %>"> <%= @page.extras["dev"] %> </a> <br>
+
+<%= if @page.extras["langs"] |> String.contains?(", ") do %>
+Tools: <%= @page.extras["langs"] |> String.split(", ") |> Enum.map(& ~s(<a href="/tags/#{&1}">#{&1}</a>)) |> Enum.join(", ") %> 
+<br>
+<% else %>
+Tools: <a href="/tags/<%= @page.extras["langs"] %>"> <%= @page.extras["langs"] %> </a>
+<br>
+<% end %>
+
 Link: <a target="_blank" href="<%= @page.extras["link"] %>"> <%= @page.extras["link"] %> </a> <br>
 Repo: <a target="_blank" href="<%= @page.extras["repo"] %>"> <%= @page.extras["repo"] %> </a> <br>
 </blockquote>
 
-<p>
 <%= @contents %>
-</p>
-
-<%= unless Enum.empty?(@page.tags) do %>
-  <p>Tags:</p>
-  <ul>
-    <%= for t <- @page.tags do %>
-      <li><a href="<%= t.list_url %>"><%= t.name %></a></li>
-    <% end %>
-  </ul>
-<% end %>
-

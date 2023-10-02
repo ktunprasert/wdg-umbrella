@@ -6,9 +6,7 @@
     <th scope="col">Name</th>
     <th scope="col">Dev</th>
     <th scope="col">Tools</th>
-    <th scope="col">Date</th>
-    <th scope="col">Thread</th>
-    <th scope="col">Post</th>
+    <th scope="col">Updated at</th>
   </tr>
 </thead>
 
@@ -19,8 +17,6 @@
     <td><%= x.extras["dev"] %></td>
     <td><%= x.extras["langs"] %></td>
     <td><%= x.date %></td>
-    <td><a target="_blank" href="<%= x.extras["thread_link"] %>"> <%= ">>#{x.extras["thread"]}" %> </a></td>
-    <td><a target="_blank" href="<%= x.extras["post_link"] %>"> <%= ">>#{x.extras["post"]}" %> </a></td>
   </tr>
   <% end %>
 </tbody>

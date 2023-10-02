@@ -1,3 +1,7 @@
 :where(dl, ol, ul) li {
   margin-bottom: 0;
 }
+
+blockquote p {
+  margin-bottom: 0;
+}

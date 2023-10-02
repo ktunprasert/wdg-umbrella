@@ -97,6 +97,8 @@ defmodule Mix.Tasks.Generate.Posts do
     #{image_text}
 
     #{post.description}
+    <br>
+    ---
     """
   end
 

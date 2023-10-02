@@ -12,7 +12,7 @@ defmodule Mix.Tasks.Generate.Posts do
     Mix.Task.run("app.start")
 
     posts =
-      WDG.Repo.all(from(p in WDG.Post, order_by: [asc: p.post_num]))
+      WDG.Repo.all(from(p in WDG.Post, order_by: [desc: p.posted_at]))
 
     posts
     |> Task.async_stream(fn post ->
@@ -20,13 +20,20 @@ defmodule Mix.Tasks.Generate.Posts do
 
       IO.puts("Wrote image #{post.post_num} with status #{inspect(status)}")
 
-      status = write_post(post, image_text)
+      date_prefix =
+        WDG.Repo.one(from(p in WDG.Post, select: max(p.posted_at), where: p.title == ^post.title))
+        |> NaiveDateTime.to_date()
+
+      filename = File.cwd!() <> ~s(/posts/#{date_prefix}-#{slugify(post.title)}.md)
+
+      status = write_post(post, image_text, filename)
+
       IO.puts("Wrote post #{post.post_num} with status #{inspect(status)}")
     end)
     |> Enum.to_list()
   end
 
-  defp write_post(%WDG.Post{} = post, image_text \\ "") do
+  defp write_post(%WDG.Post{} = post, image_text \\ "", filename) do
     {tags, langs} =
       case {post.dev, post.tools} do
         {nil, nil} -> {nil, nil}
@@ -35,7 +42,30 @@ defmodule Mix.Tasks.Generate.Posts do
         {dev, tools} -> {Enum.join([dev | tools], ", "), Enum.join(tools, ", ")}
       end
 
-    content = """
+    {content, file} =
+      if File.exists?(filename) do
+        {:ok, file} = File.open(filename, [:append])
+        {gen_subsequent_post(post, image_text), file}
+      else
+        {:ok, file} = File.open(filename, [:write])
+        {gen_initial_post(post, image_text, tags, langs), file}
+      end
+
+    IO.binwrite(file, content)
+    File.close(file)
+    :ok
+  end
+
+  defp gen_post_header(%WDG.Post{} = post) do
+    """
+    > #{post.posted_at} <br>
+    > Thread [>>#{post.thread_no}](#{build_link(post.thread_no)}) <br>
+    > Post [>>#{post.post_num}](#{build_link(post.thread_no, post.post_num)})
+    """
+  end
+
+  defp gen_initial_post(%WDG.Post{} = post, image_text, tags, langs) do
+    """
     ---
     title: #{post.title}
     date: #{post.posted_at}
@@ -50,19 +80,28 @@ defmodule Mix.Tasks.Generate.Posts do
     repo: #{post.repo}
     ---
 
+    #{gen_post_header(post)}
+
+    #{image_text}
+
+    #{post.description}
+    <br>
+    ---
+    """
+  end
+
+  defp gen_subsequent_post(%WDG.Post{} = post, image_text) do
+    """
+    #{gen_post_header(post)}
+
     #{image_text}
 
     #{post.description}
     """
+  end
 
-    date_prefix = post.posted_at |> NaiveDateTime.to_date()
-
-    {:ok, file} =
-      File.open(File.cwd!() <> "/posts/#{date_prefix}-#{post.post_num}.md", [:write])
-
-    IO.binwrite(file, content)
-    File.close(file)
-    :ok
+  defp slugify(string) do
+    string |> String.replace(~r/[^a-zA-Z0-9]/, "-")
   end
 
   defp write_image(%WDG.Post{image: nil}), do: {:no_image, ""}

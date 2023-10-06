@@ -57,9 +57,11 @@ defmodule Mix.Tasks.Generate.Posts do
 
   defp gen_post_header(%WDG.Post{} = post) do
     """
-    > #{post.posted_at} <br>
-    > Thread [>>#{post.thread_no}](#{build_link(post.thread_no)}) <br>
-    > Post [>>#{post.post_num}](#{build_link(post.thread_no, post.post_num)})
+    <p style="display:flex; gap: 1rem">
+    <a target="_blank" href="#{build_link(post.thread_no)}"> >>/wdg/#{post.thread_no} </a>
+    <a target="_blank" href="#{build_link(post.thread_no, post.post_num)}"> >>#{post.post_num} </a>
+    <span style="flex-grow: 1; text-align: end"> #{post.posted_at} </span>
+    </p>
     """
   end
 

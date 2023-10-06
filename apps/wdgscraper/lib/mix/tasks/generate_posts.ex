@@ -15,7 +15,7 @@ defmodule Mix.Tasks.Generate.Posts do
       WDG.Repo.all(from(p in WDG.Post, order_by: [desc: p.posted_at]))
 
     posts
-    |> Task.async_stream(fn post ->
+    |> Enum.each(fn post ->
       {status, image_text} = write_image(post)
 
       IO.puts("Wrote image #{post.post_num} with status #{inspect(status)}")
@@ -30,7 +30,6 @@ defmodule Mix.Tasks.Generate.Posts do
 
       IO.puts("Wrote post #{post.post_num} with status #{inspect(status)}")
     end)
-    |> Enum.to_list()
   end
 
   defp write_post(%WDG.Post{} = post, image_text \\ "", filename) do

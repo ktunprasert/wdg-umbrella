@@ -117,7 +117,15 @@ defmodule Mix.Tasks.Generate.Posts do
 
     IO.binwrite(file, post.image)
     File.close(file)
-    {:ok, "![img](/assets/images/#{post.post_num}#{post.image_ext})"}
+    {:ok,
+     """
+     <div class="img_block">
+     <input autocomplete="off" aria-autocomplete="none" type="checkbox" class="img_toggle" id="i#{post.post_num}"/>
+     <label for="i#{post.post_num}">
+      <img src="/assets/images/#{post.post_num}#{post.image_ext}" alt="img"/>
+     </label>
+     </div>
+     """}
   end
 
   defp build_link(thread_no, post_no), do: @base_url <> "#{thread_no}#p#{post_no}"

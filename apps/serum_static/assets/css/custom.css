@@ -5,3 +5,20 @@
 blockquote p {
   margin-bottom: 0;
 }
+
+.img_toggle[type="checkbox"] {
+  display: none;
+
+  &:checked ~ label img {
+    height: auto;
+  }
+}
+
+.img_block {
+  display: flex;
+  justify-content: center;
+  & img {
+    height: 200px;
+    object-fit: contain;
+  }
+}

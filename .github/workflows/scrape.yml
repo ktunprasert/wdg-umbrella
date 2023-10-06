@@ -4,6 +4,7 @@ on:
   schedule:
     # Run at every 4 hours of the day
     - cron: "0 */4 * * *"
+  workflow_dispatch:
 
 permissions:
   contents: write

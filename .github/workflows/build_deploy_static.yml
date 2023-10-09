@@ -12,6 +12,11 @@ on:
       - "db/**"
       - "apps/serum_static/**"
   workflow_dispatch:
+  workflow_run:
+    workflows:
+      - "Scrape and Commit Workflow"
+    types:
+      - completed
 
 permissions:
   contents: read

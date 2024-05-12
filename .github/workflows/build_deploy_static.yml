@@ -68,7 +68,7 @@ jobs:
         uses: peaceiris/actions-gh-pages@v3
         with:
           personal_token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
-          publish_dir: apps/serum_static/site/
+          publish_dir: apps/serum_static/site
           external_repository: wdg-one/wdg-one.github.io # specify the target repo
           publish_branch: main # or master, depending on your setup
           user_name: "github-actions[bot]"

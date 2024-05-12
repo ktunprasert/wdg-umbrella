@@ -6,6 +6,7 @@ defmodule Mix.Tasks.Generate.Posts do
   import Ecto.Query
 
   @base_url "https://boards.4channel.org/g/thread/"
+  @desu_url "https://desuarchive.org/g/thread/"
 
   @impl Mix.Task
   def run(_args) do
@@ -58,8 +59,14 @@ defmodule Mix.Tasks.Generate.Posts do
   defp gen_post_header(%WDG.Post{} = post) do
     """
     <p style="display:flex; gap: 1rem">
+    <span>
     <a target="_blank" href="#{build_link(post.thread_no)}"> >>/wdg/#{post.thread_no} </a>
+    <a target="_blank" href="#{desu_link(post.thread_no)}">[desu]</a>
+    </span>
+    <span>
     <a target="_blank" href="#{build_link(post.thread_no, post.post_num)}"> >>#{post.post_num} </a>
+    <a target="_blank" href="#{desu_link(post.thread_no, post.post_num)}">[desu]</a>
+    </span>
     <span style="flex-grow: 1; text-align: end"> #{post.posted_at} </span>
     </p>
     """
@@ -77,6 +84,8 @@ defmodule Mix.Tasks.Generate.Posts do
     thread: #{post.thread_no}
     post_link: #{build_link(post.thread_no, post.post_num)}
     thread_link: #{build_link(post.thread_no)}
+    post_desu: #{desu_link(post.thread_no, post.post_num)}
+    thread_desu: #{desu_link(post.thread_no)}
     link: #{post.link}
     repo: #{post.repo}
     ---
@@ -130,4 +139,7 @@ defmodule Mix.Tasks.Generate.Posts do
 
   defp build_link(thread_no, post_no), do: @base_url <> "#{thread_no}#p#{post_no}"
   defp build_link(thread_no), do: @base_url <> "#{thread_no}"
+
+  defp desu_link(thread_no, post_no), do: @desu_url <> "#{thread_no}#p#{post_no}"
+  defp desu_link(thread_no), do: @desu_url <> "#{thread_no}"
 end

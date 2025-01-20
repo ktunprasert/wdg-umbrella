@@ -12,7 +12,7 @@ permissions:
 jobs:
   scrape_and_commit:
     name: Scrape and Commit to Repository
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v2
       - name: Set up Elixir
